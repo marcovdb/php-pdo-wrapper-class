@@ -122,8 +122,8 @@ class db extends PDO {
                     return $pdostmt->fetchAll(PDO::FETCH_ASSOC);
                 elseif(preg_match("/^(" . implode("|", array("delete", "update")) . ") /i", $this->sql))
                     return $pdostmt->rowCount();
-				elseif(preg_match("/^(" . implode("|", array("insert")) . ") /i", $this->sql))
-					return $this->lastInsertId();
+                elseif(preg_match("/^(" . implode("|", array("insert")) . ") /i", $this->sql))
+                    return $this->lastInsertId();
             }
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
