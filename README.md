@@ -56,6 +56,7 @@ $insert = array(
 $db->insert("mytable", $insert);
 ```
 If no SQL errors are produced, this method will return either:
+
 1. The row count of the INSERT operation, if `$returnRowCount` is set to `true` (it is by default);
 2. The ID of the last inserted row, if `$returnRowCount` is set to `false`.
 
