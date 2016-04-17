@@ -45,7 +45,7 @@ If no SQL errors are produced, this method will return the number of rows affect
 ###insert
 ```php
 //insert Method Declaration
-public function insert($table, $info) { }
+public function insert($table, $info, $returnRowCount=true) { }
 
 $insert = array(
     "FName" => "John",
@@ -55,7 +55,11 @@ $insert = array(
 );
 $db->insert("mytable", $insert);
 ```
-If no SQL errors are produced, this method will return the ID of the inserted row.
+If no SQL errors are produced, this method will return either:
+# The row count of the INSERT operation, if `$returnRowCount` is set to `true` (it is by default);
+# The ID of the last inserted row, if `$returnRowCount` is set to `false`.
+
+`$info` can be a multi-dimensional array, which will then insert multiple rows.
 
 ###run
 ```php
