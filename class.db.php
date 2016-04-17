@@ -82,8 +82,9 @@ class db extends PDO {
 
         if(false !== ($list = $this->run($sql))) {
             $fields = array();
-            foreach($list as $record)
+            foreach($list as $record) {
                 $fields[] = $record[$key];
+            }
             return array_values(array_intersect($fields, array_keys($info)));
         }
         return array();
@@ -102,12 +103,23 @@ class db extends PDO {
     }
 
     public function insert($table, $info, $returnRowCount=true) {
-        $fields = $this->filter($table, $info);
-        $sql = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES (:" . implode($fields, ", :") . ");";
         $bind = array();
-        foreach($fields as $field)
-            $bind[":$field"] = $info[$field];
-        return $this->run($sql, $bind, $returnInsertRowCount);
+        if(isset($info[0]) && is_array($info[0])) {
+            $fields = $this->filter($table, $info[0]);
+            $sql = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES ";
+            foreach($info as $row) {
+                $sql .= "(:" . implode($row, ", :") . ")";
+                $sql .= ($row !== end($info)) ? ", " : ";";
+                foreach ($row as $field)
+                    $bind[":$field"] = $field;
+            }
+        } else {
+            $fields = $this->filter($table, $info);
+            $sql = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES (:" . implode($fields, ", :") . ");";
+            foreach($fields as $field)
+                $bind[":$field"] = $info[$field];
+        }
+        return $this->run($sql, $bind, $returnRowCount);
     }
 
     public function run($sql, $bind="", $returnInsertRowCount=true) {
