@@ -107,7 +107,7 @@ class db extends PDO {
         $bind = array();
         foreach($fields as $field)
             $bind[":$field"] = $info[$field];
-        return $this->run($sql, $bind);
+        return $this->run($sql, $bind, $returnInsertRowCount);
     }
 
     public function run($sql, $bind="", $returnInsertRowCount=true) {
