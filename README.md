@@ -1,5 +1,5 @@
 # php-pdo-wrapper-class
-This project was originally found at code.google.com/p/php-pdo-wrapper-class. As I was using it in a personal project and had made some fixes and improvements to it, it made sense to share my updated version with the world.
+This project was originally found at code.google.com/p/php-pdo-wrapper-class and no longer being actively maintained. As I was using it in a personal project and had made some fixes and improvements to it, it made sense to share my updated version with the world.
 
 ## Project overview
 This project provides a minimal extension for PHP's PDO (PHP Data Objects) class designed for ease-of-use and saving development time/effort. This is achieved by providing methods - delete, insert, select, and update - for quickly building common SQL statements, handling exceptions when SQL errors are produced, and automatically returning results/number of affected rows for the appropriate SQL statement types.
