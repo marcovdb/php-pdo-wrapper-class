@@ -47,12 +47,14 @@ If no SQL errors are produced, this method will return the number of rows affect
 //insert Method Declaration
 public function insert($table, $info, $returnRowCount=true) { }
 
+// Insert a single row
 $insert = array(
     "FName" => "John",
     "LName" => "Doe",
     "Age" => 26,
     "Gender" => "male"
 );
+// Insert multiple rows
 $insertMultiple = array(
     array(
         "FName" => "John",
