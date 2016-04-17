@@ -96,12 +96,12 @@ class db extends PDO {
             else
                 $bind = array();
         }
-	    foreach($bind as $key => $val)
-	        $bind[$key] = stripslashes($val);
+        foreach($bind as $key => $val)
+            $bind[$key] = stripslashes($val);
         return $bind;
     }
 
-    public function insert($table, $info) {
+    public function insert($table, $info, $returnRowCount=true) {
         $fields = $this->filter($table, $info);
         $sql = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES (:" . implode($fields, ", :") . ");";
         $bind = array();
@@ -110,7 +110,7 @@ class db extends PDO {
         return $this->run($sql, $bind);
     }
 
-    public function run($sql, $bind="") {
+    public function run($sql, $bind="", $returnInsertRowCount=true) {
         $this->sql = trim($sql);
         $this->bind = $this->cleanup($bind);
         $this->error = "";
@@ -123,7 +123,7 @@ class db extends PDO {
                 elseif(preg_match("/^(" . implode("|", array("delete", "update")) . ") /i", $this->sql))
                     return $pdostmt->rowCount();
                 elseif(preg_match("/^(" . implode("|", array("insert")) . ") /i", $this->sql))
-                    return $this->lastInsertId();
+                    return ($returnInsertRowCount) ? $pdostmt->rowCount() : $this->lastInsertId();
             }
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
