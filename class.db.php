@@ -122,7 +122,7 @@ class db extends PDO {
         return $this->run($sql, $bind, $returnRowCount);
     }
 
-    public function run($sql, $bind="", $returnInsertRowCount=true) {
+    public function run($sql, $bind="", $returnRowCount=true) {
         $this->sql = trim($sql);
         $this->bind = $this->cleanup($bind);
         $this->error = "";
@@ -135,7 +135,7 @@ class db extends PDO {
                 elseif(preg_match("/^(" . implode("|", array("delete", "update")) . ") /i", $this->sql))
                     return $pdostmt->rowCount();
                 elseif(preg_match("/^(" . implode("|", array("insert")) . ") /i", $this->sql))
-                    return ($returnInsertRowCount) ? $pdostmt->rowCount() : $this->lastInsertId();
+                    return ($returnRowCount) ? $pdostmt->rowCount() : $this->lastInsertId();
             }
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
