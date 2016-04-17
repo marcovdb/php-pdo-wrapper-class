@@ -53,7 +53,22 @@ $insert = array(
     "Age" => 26,
     "Gender" => "male"
 );
+$insertMultiple = array(
+    array(
+        "FName" => "John",
+        "LName" => "Doe",
+        "Age" => 26,
+        "Gender" => "male"
+    ),
+    array(
+        "FName" => "Michelle",
+        "LName" => "Williams",
+        "Age" => 36,
+        "Gender" => "female"
+    )
+);
 $db->insert("mytable", $insert);
+$db->insert("mytable", $insertMultiple);
 ```
 If no SQL errors are produced, this method will return either:
 
