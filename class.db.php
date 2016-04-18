@@ -98,9 +98,12 @@ class db extends PDO {
             else
                 $bind = array();
         }
-        foreach($bind as $key => $val)
-            if (!is_null($val))
+        // Only call stripslashes() if magic quotes is on. Thankfully, this abomination was removed from PHP entirely in version 5.4.
+        // Punch your webhost in the face if they're still running PHP < 5.4 with magic quotes enabled... 
+        if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc() && !is_null($val)) {
+            foreach($bind as $key => $val)
                 $bind[$key] = stripslashes($val);
+        }
         return $bind;
     }
 
