@@ -168,6 +168,9 @@ class db extends PDO {
     }
 
     public function select($table, $where="", $bind="", $fields="*", $orderby="") {
+        if (empty($fields)) {
+            $fields = "*";
+        }
         $sql = "SELECT " . $fields . " FROM " . $table;
         if(!empty($where)) {
             $sql .= " WHERE " . $where;
